@@ -1,4 +1,5 @@
+# Fetch historical weather only data
+# https://www.worldweatheronline.com
+
 import time
 import json
-
-API_KEY = "5A347F57-8323-4BBD-BF2D-F095AB5C492C"
