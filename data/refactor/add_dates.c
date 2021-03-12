@@ -1,5 +1,5 @@
 /*
-Proigram to add dates to the CSV file at the beginning of each line.
+Program to add dates to the CSV file at the beginning of each line.
 
 Written in C because it was easier to do than in Python, and much faster.
 */
@@ -12,8 +12,7 @@ Written in C because it was easier to do than in Python, and much faster.
 
 int main() {    
     FILE *file_ptr;
-    file_ptr = fopen("/home/jose/Programming/aiml/Data/houston-AQI-weather/data_no_dates.csv", "r");
-
+    file_ptr = fopen("/home/jose/Programming/aiml/Data/houston-AQI-weather/data_new.csv", "r");
 
     char line[LINE_SIZE]; char line_buffer[LINE_SIZE];
 
@@ -32,5 +31,4 @@ int main() {
     }
 
     return 0;
-    
 }
