@@ -1,37 +1,19 @@
 # NOAA dolt data
 
 import pandas as pd
+from scipy import spatial
+import json
 
-stations = [
-    72059400188,
-72061700208,
-72063700223,
-72242712975,
-72243012960,
-72243612906,
-72244012918,
-72252712976,
-72254312977,
-99848199999,
-72242953910,
-72244453902,
-72244753903,
-72091700306,
-72241012917,
-72242012923,
-99736199999,
-99736499999,
-99737099999,
-99772999999,
-99818299999
-]
-
-stations = [str(st) for st in stations]
+with open("../coords.json") as f: coords = json.load(f)
 
 base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/"
 
-df = pd.read_csv(base_dir + "noaa_stations.csv")
+noaa_df = pd.read_csv(base_dir + "noaa_stations.csv")
 
-df_filtered = df[df['station'].isin(stations)]
+noaa_coords = noaa_df[['latitude', 'longitude']].to_numpy()
 
-df_filtered.to_csv('noaa_stations.csv')
+for name, coord in coords.items():
+    tree = spatial.KDTree(noaa_coords)
+    idx = int(tree.query([coord])[1])
+
+    print(name, '->', noaa_df['name'].values[idx])
