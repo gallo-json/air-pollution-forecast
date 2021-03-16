@@ -1,42 +1,32 @@
 # NOAA dolt data
-'''
-    import pandas as pd
-    from scipy import spatial
-    import json
 
-    with open("../coords.json") as f: coords = json.load(f)
+import pandas as pd
+from scipy import spatial
+import json
 
-    base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/"
+with open("data/coords.json") as f: coords = json.load(f)
 
-    noaa_df = pd.read_csv(base_dir + "noaa_stations.csv")
+base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/"
 
-    noaa_coords = noaa_df[['latitude', 'longitude']].to_numpy()
+noaa_df = pd.read_csv(base_dir + "noaa_stations.csv")
 
-    noaa = []
+noaa_coords = noaa_df[['latitude', 'longitude']].to_numpy()
 
-    for name, coord in coords.items():
-        tree = spatial.KDTree(noaa_coords)
-        idx = int(tree.query([coord])[1])
+for tceq_name, tceq_coord in coords.items():
+    tree = spatial.KDTree(noaa_coords)
+    idx = int(tree.query([tceq_coord])[1])
 
-        print(name, '->', noaa_df['name'].values[idx])
-        noaa.append(noaa_df['station'].values[idx])
+    noaa_station =  noaa_df['station'].values[idx]
+    #print(tceq_name, '->', noaa_station)
 
-    for i in list(set(noaa)):
-        print('"' + str(i) + '", ', end='')
-'''
-import os
-from tqdm import tqdm
+    tceq_name = tceq_name.replace('/', '-')
+    tceq_station_df = pd.read_csv(base_dir + "stations/" + tceq_name + ".csv")
 
-stations = ["72242712975", "72252712976", "72254312977", "99737099999", "72061700208", "99848199999", "72242953910", "72244012918", "72242012923", "72059400188", "99736199999"]
+    for label in ["air_temp", "dew_point_temp", "sea_level_pressure", "sky_ceiling_height", "visibility", "wind_speed"]:
+        label_df = pd.read_csv("/media/jose/SAMSUNG/noaa/" + str(noaa_station) + "/" + str(noaa_station) + "_" + label + ".csv")
 
-indexes = ["_air_temp", "_dew_point_temp", "_sea_level_pressure", "_sky_ceiling_height", "_visibility", "_wind_speed"]
+        # Filter out years before 1997
+        label_df = label_df[(label_df['commit_date'].str[:4]).map(int) >= 1997]
 
-os.chdir("/media/jose/SAMSUNG/noaa")
-
-for s in stations:
-    print(s)
-    os.mkdir(s)
-
-    for i in tqdm(indexes):
-        os.system("dolt sql -r csv -q 'SELECT * FROM dolt_history" + i + " WHERE station in (\"" + s + "\")' > " + s + "/" + s + i + ".csv")
-        print('Done with', i)
+        print(label_df.head(5))
+        print()

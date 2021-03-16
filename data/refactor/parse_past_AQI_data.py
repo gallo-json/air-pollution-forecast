@@ -42,7 +42,7 @@ for a in areas:
             i = i - 1
     
     # File names cannot have forward slashes in name
-    a = a.replace("/", "-")
+    a = a.replace("/", "-").strip()
     new_area_df.to_csv(base_dir + "stations/" + a + ".csv")
 
     print(a)
