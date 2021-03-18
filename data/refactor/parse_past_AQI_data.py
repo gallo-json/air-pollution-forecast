@@ -1,6 +1,7 @@
 # Script to parse the original lump of AQI data and separate it into different stations
 
 import pandas as pd
+import numpy as np
 
 base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/"
 
@@ -36,10 +37,10 @@ for a in areas:
 
     # Filter out the trailing NaNs out of stations that were deactiavted prior to 02-2021
     if new_area_df['Date'].values[-1] != '28-02-2021':
-        i = len(new_area_df)
-        while pd.isna(new_area_df['AQI'].values[-1]) or new_area_df['AQI'].values[-1] == 'NV':
+        while pd.isna(new_area_df['AQI'].values[-1]) or new_area_df['AQI'].values[-1] == 'NV' or  new_area_df['AQI'].values[-1] == 'NaN':
             new_area_df = new_area_df[:-1]
-            i = i - 1
+
+    new_area_df = new_area_df.fillna(0)
     
     # File names cannot have forward slashes in name
     a = a.replace("/", "-").strip()
