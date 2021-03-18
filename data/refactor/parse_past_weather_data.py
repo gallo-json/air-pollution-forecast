@@ -22,6 +22,7 @@ for tceq_name, tceq_coord in coords.items():
 
     tceq_name = tceq_name.replace('/', '-')
     tceq_station_df = pd.read_csv(base_dir + "stations/" + tceq_name + ".csv")
+    del tceq_station_df['Unnamed: 0']
 
     tceq_station_df['Date'] = pd.to_datetime(tceq_station_df['Date'], errors='coerce', format='%d-%m-%Y')
     first_day = tceq_station_df['Date'].values[0]
@@ -38,10 +39,13 @@ for tceq_name, tceq_coord in coords.items():
         label_df['commit_date'] = pd.to_datetime(label_df['commit_date'], errors='coerce', format='%Y-%m-%d 00:00:00 +0000 UTC')
         label_df = label_df[(label_df['commit_date'] >= first_day) & (label_df['commit_date'] <= last_day)]
         label_df = label_df.sort_values(by=['commit_date'])
-        #label_df = label_df.fillna(0)
+
         label_df = label_df[~label_df.commit_date.isin(missing_dates)]
 
-        print(pd.date_range(start=first_day, end=label_df.commit_date.values[-1]).difference(label_df.commit_date))
+        diff = len(tceq_station_df) - len(label_df)
 
-    #print(tceq_station_df.head())
-        #print()
+        label_arr = list(label_df['avg']) + (['NaN'] * diff)
+
+        tceq_station_df[label] = label_arr
+    
+    #print(tceq_station_df.tail(5))

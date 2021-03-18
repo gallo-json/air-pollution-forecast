@@ -40,7 +40,7 @@ for a in areas:
         while pd.isna(new_area_df['AQI'].values[-1]) or new_area_df['AQI'].values[-1] == 'NV' or  new_area_df['AQI'].values[-1] == 'NaN':
             new_area_df = new_area_df[:-1]
 
-    new_area_df = new_area_df.fillna(0)
+    #new_area_df = new_area_df.fillna(0)
     
     # File names cannot have forward slashes in name
     a = a.replace("/", "-").strip()
