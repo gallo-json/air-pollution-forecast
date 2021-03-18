@@ -41,8 +41,7 @@ for tceq_name, tceq_coord in coords.items():
         #label_df = label_df.fillna(0)
         label_df = label_df[~label_df.commit_date.isin(missing_dates)]
 
-        if len(label_df) > len(tceq_station_df):
-            print(len(label_df), len(tceq_station_df))
+        print(pd.date_range(start=first_day, end=label_df.commit_date.values[-1]).difference(label_df.commit_date))
 
     #print(tceq_station_df.head())
         #print()
