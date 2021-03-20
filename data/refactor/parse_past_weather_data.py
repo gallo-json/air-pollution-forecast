@@ -1,5 +1,3 @@
-# NOAA dolt data
-
 import pandas as pd
 import numpy as np
 from scipy import spatial
@@ -44,8 +42,6 @@ for tceq_name, tceq_coord in coords.items():
 
         diff = len(tceq_station_df) - len(label_df)
 
-        label_arr = list(label_df['avg']) + (['NaN'] * diff)
+        #label_arr = (['NaN'] * startlist(label_df['avg']) + (['NaN'] * diff)
 
-        tceq_station_df[label] = label_arr
-    
-    #print(tceq_station_df.tail(5))
+        #tceq_station_df[label] = label_arr
