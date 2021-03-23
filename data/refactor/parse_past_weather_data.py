@@ -39,16 +39,17 @@ for tceq_name, tceq_coord in coords.items():
 
         assert len(label_df) <= len(tceq_station_df)
 
+        start_diff = len(tceq_station_df)
+        end_diff = 0
+
         if len(label_df) != 0:
             start_diff = tceq_station_df.loc[tceq_station_df.Date == label_df.commit_date.values[0]].index[0]
             end_diff = len(tceq_station_df) - start_diff - len(label_df)
-        else:
-            start_diff = len(tceq_station_df)
-            end_diff = 0
 
         label_arr = (['NaN'] * start_diff) + list(label_df['avg']) + (['NaN'] * end_diff)
 
         tceq_station_df[label] = label_arr
 
-    print(tceq_station_df[10:15])
-        
+    print(tceq_station_df.head(5))
+    tceq_station_df.to_csv(base_dir + 'data/' + tceq_name + '.csv')
+    
