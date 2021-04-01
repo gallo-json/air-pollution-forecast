@@ -17,40 +17,17 @@ base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/data/"
 with open("data/coords.json") as a: coords = json.load(a)
 with open("data/API_keys.json") as b: keys = json.load(b)
 
-AN_API = keys['AN_API1']
+AN_API = keys['AN_API2']
 
 def get_aqi(lat, long, date):
     return 'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={long}&date={date}T00-0000&distance=100&API_KEY={key}' \
         .format(lat=lat, long=long, date=date, key=AN_API)
 
-
-'''
-response_aqi = requests.get(get_aqi(29.1442, -95.7566, '2019-02-02'))
-
-print(response_aqi.json()[0]['AQI'])
-
-response_weather = requests.get(get_weather(29.1442, -95.7566, '2019-02-02'))
-
-# air_temp
-print(response_weather.json()['data']['weather'][0]['maxtempC'])
-
-# dew point temp
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['DewPointC'])
-
-# sea level pressure
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['pressure'])
-
-# visibility
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['visibility']) # multiply by 1000
-
-#wind speed
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['windspeedKmph']) # DIVIDE BY 3.6 FOR m/s
-'''
-
-for name, coord in coords.items():
+for name, coord in reversed(coords.items()):
     lat, long = round(coord[0], 4), round(coord[1], 4)
 
     name = name.replace('/', '-')
+    print(name)
     try:
         df = pd.read_csv("/home/jose/Programming/aiml/Data/houston-AQI-weather/filled-in-data/" + name + ".csv")
     except FileNotFoundError:
@@ -60,7 +37,6 @@ for name, coord in coords.items():
 
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce', format='%Y-%m-%d')
 
-    print(name)
     for i in range(len(df)):
         if (pd.isna(df.AQI.values[i]) or df.AQI.values[i] == 'NaN' or df.AQI.values[i] == 'NV') \
             and df.Date.values[i] >= np.datetime64('2012-01-01'):
