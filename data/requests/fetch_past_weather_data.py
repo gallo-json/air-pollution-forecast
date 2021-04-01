@@ -1,4 +1,4 @@
-
+from datetime import datetime
 import pandas as pd 
 import requests
 import time
@@ -32,7 +32,7 @@ print(response_weather.json()['data']['weather'][0]['hourly'][0]['visibility']) 
 print(response_weather.json()['data']['weather'][0]['hourly'][0]['windspeedKmph']) # DIVIDE BY 3.6 FOR m/s
 '''
 
-for name, coord in reversed(coords.items()):
+for name, coord in coords.items():
     lat, long = round(coord[0], 4), round(coord[1], 4)
 
     name = name.replace('/', '-')
@@ -43,9 +43,12 @@ for name, coord in reversed(coords.items()):
         del df['sky_ceiling_height']
     del df['Unnamed: 0']
 
+    #df['Date'] = pd.to_datetime(df['Date'], errors='coerce', format='%Y-%m-%d')
 
+    print(name)
     for i in range(len(df)):
         if any((pd.isna(df[label].values[i]) or df[label].values[i] == 'NaN' or df[label].values[i] == 'NV') for label in list(df.columns[2:])):
+
             response_weather = requests.get(get_weather(lat, long, df.Date.values[i]))
 
             print(response_weather)
@@ -72,5 +75,4 @@ for name, coord in reversed(coords.items()):
 
             time.sleep(1)
         df.to_csv("/home/jose/Programming/aiml/Data/houston-AQI-weather/filled-in-data/" + name + ".csv")
-
     print(df.head(5))

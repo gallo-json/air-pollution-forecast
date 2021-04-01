@@ -46,7 +46,7 @@ print(response_weather.json()['data']['weather'][0]['hourly'][0]['visibility']) 
 print(response_weather.json()['data']['weather'][0]['hourly'][0]['windspeedKmph']) # DIVIDE BY 3.6 FOR m/s
 '''
 
-for name, coord in reversed(coords.items()):
+for name, coord in coords.items():
     lat, long = round(coord[0], 4), round(coord[1], 4)
 
     name = name.replace('/', '-')
@@ -60,7 +60,7 @@ for name, coord in reversed(coords.items()):
     print(name)
     for i in range(len(df)):
         try:
-            if (pd.isna(df.AQI.values[i]) or df.AQI.values[i] == 'NaN' or df.AQI.values[i] == 'NV') and (int(df.Date.values[i][:4]) >= 2012):
+            if (pd.isna(df.AQI.values[i]) or df.AQI.values[i] == 'NaN' or df.AQI.values[i] == 'NV') and (datetime.strptime(df.Date.values[i], '%Y-%m-%d') >= datetime(2012, 1, 1)):
                 response_aqi = requests.get(get_aqi(lat, long, df.Date.values[i]))
                 
                 try:
