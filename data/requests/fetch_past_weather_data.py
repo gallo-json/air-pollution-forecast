@@ -9,7 +9,7 @@ base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/data/"
 with open("data/coords.json") as a: coords = json.load(a)
 with open("data/API_keys.json") as b: keys = json.load(b)
 
-WWO_API = keys['WWO_API']
+WWO_API = keys['WWO_API2']
 
 def get_weather(lat, long, date):
     return 'http://api.worldweatheronline.com/premium/v1/past-weather.ashx?key={key}&q={lat},{long}&format=json&date={date}&show_comments=no&tp=24' \
@@ -32,7 +32,7 @@ print(response_weather.json()['data']['weather'][0]['hourly'][0]['visibility']) 
 print(response_weather.json()['data']['weather'][0]['hourly'][0]['windspeedKmph']) # DIVIDE BY 3.6 FOR m/s
 '''
 
-for name, coord in coords.items():
+for name, coord in reversed(coords.items()):
     lat, long = round(coord[0], 4), round(coord[1], 4)
 
     name = name.replace('/', '-')
@@ -43,11 +43,12 @@ for name, coord in coords.items():
         del df['sky_ceiling_height']
     del df['Unnamed: 0']
 
-    #df['Date'] = pd.to_datetime(df['Date'], errors='coerce', format='%Y-%m-%d')
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce', format='%Y-%m-%d')
 
     print(name)
     for i in range(len(df)):
-        if any((pd.isna(df[label].values[i]) or df[label].values[i] == 'NaN' or df[label].values[i] == 'NV') for label in list(df.columns[2:])):
+        if any((pd.isna(df[label].values[i]) or df[label].values[i] == 'NaN' or df[label].values[i] == 'NV') for label in list(df.columns[2:])) \
+            and df.Date.values[i] >= np.datetime64('2005-01-01'):
 
             response_weather = requests.get(get_weather(lat, long, df.Date.values[i]))
 
