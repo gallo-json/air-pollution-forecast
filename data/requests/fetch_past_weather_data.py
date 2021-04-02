@@ -10,28 +10,14 @@ base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/data/"
 with open("data/coords.json") as a: coords = json.load(a)
 with open("data/API_keys.json") as b: keys = json.load(b)
 
-WWO_API = keys['WWO_API3']
+different_keys = ['WWO_AP1', 'WWO_API2', 'WWO_API3', 'WWO_API4']
+key_pool = cycle(different_keys)
 
-def get_weather(lat, long, date):
+WWO_API = keys[next(key_pool)]
+
+def get_weather(lat, long, date, key):
     return 'http://api.worldweatheronline.com/premium/v1/past-weather.ashx?key={key}&q={lat},{long}&format=json&date={date}&show_comments=no&tp=24' \
-        .format(lat=lat, long=long, date=date, key=WWO_API)
-
-'''
-# air_temp
-print(response_weather.json()['data']['weather'][0]['maxtempC'])
-
-# dew point temp
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['DewPointC'])
-
-# sea level pressure
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['pressure'])
-
-# visibility
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['visibility']) # multiply by 1000
-
-#wind speed
-print(response_weather.json()['data']['weather'][0]['hourly'][0]['windspeedKmph']) # DIVIDE BY 3.6 FOR m/s
-'''
+        .format(lat=lat, long=long, date=date, key=key)
 
 for name, coord in reversed(coords.items()):
     lat, long = round(coord[0], 4), round(coord[1], 4)
@@ -44,16 +30,17 @@ for name, coord in reversed(coords.items()):
         df = pd.read_csv(base_dir + name + '.csv')
         del df['sky_ceiling_height']
     del df['Unnamed: 0']
-
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce', format='%Y-%m-%d')
+    
     for i in range(len(df)):
         if any((pd.isna(df[label].values[i]) or df[label].values[i] == 'NaN' or df[label].values[i] == 'NV') for label in list(df.columns[2:])) \
-            and df.Date.values[i] >= np.datetime64('2012-01-01'):
+            and pd.to_datetime(df.Date.values[i], errors='coerce', format='%Y-%m-%d') >= np.datetime64('2012-01-01'):
 
-            response_weather = requests.get(get_weather(lat, long, df.Date.values[i]))
+            response_weather = requests.get(get_weather(lat, long, df.Date.values[i], key=WWO_API))
 
-            print(response_weather)
+            if response_aqi.status_code == 469:
+                WWO_API = keys[next(key_pool)]
 
+            print(response_weather, WWO_API)
             try:
                 if (pd.isna(df.air_temp.values[i]) or df.air_temp.values[i] == 'NaN' or df.air_temp.values[i] == 'NV'):
                     df.air_temp.values[i] = int(response_weather.json()['data']['weather'][0]['maxtempC'])
