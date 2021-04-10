@@ -18,7 +18,7 @@ base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/data/"
 with open("data/coords.json") as a: coords = json.load(a)
 with open("data/API_keys.json") as b: keys = json.load(b)
 
-different_keys = ['AN_AP1', 'AN_API2', 'AN_API3']
+different_keys = ['AN_API5', 'AN_API6']
 key_pool = cycle(different_keys)
 
 AN_API = keys[next(key_pool)]
@@ -27,7 +27,7 @@ def get_aqi(lat, long, date, key):
     return 'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={long}&date={date}T00-0000&distance=100&API_KEY={key}' \
         .format(lat=lat, long=long, date=date, key=key)
 
-for name, coord in reversed(coords.items()):
+for name, coord in coords.items():
     lat, long = round(coord[0], 4), round(coord[1], 4)
 
     name = name.replace('/', '-')
@@ -42,13 +42,10 @@ for name, coord in reversed(coords.items()):
     for i in range(len(df)):
         if (pd.isna(df.AQI.values[i]) or df.AQI.values[i] == 'NaN' or df.AQI.values[i] == 'NV') \
             and pd.to_datetime(df.Date.values[i], errors='coerce', format='%Y-%m-%d') >= np.datetime64('2012-01-01'):
-            response_aqi = requests.get(get_aqi(lat, long, df.Date.values[i], AN_API))
-
-            if response_aqi.status_code == 469:
-                AN_API = keys[next(key_pool)]
+            response_aqi = requests.get(get_aqi(lat, long, df.Date.values[i], keys[next(key_pool)]))
             
             try:
-                print(response_aqi, AN_API)
+                print(response_aqi)
                 df.AQI.values[i] = response_aqi.json()[0]['AQI']
             except (IndexError, KeyError):
                 print('No data')
@@ -56,7 +53,7 @@ for name, coord in reversed(coords.items()):
                 print('Server error, skipping')
     
             print(df.loc[[i]])
-            time.sleep(1)
+            time.sleep(0.33)
 
         df.to_csv("/home/jose/Programming/aiml/Data/houston-AQI-weather/filled-in-data/" + name + ".csv")
     print(df.head(5))
