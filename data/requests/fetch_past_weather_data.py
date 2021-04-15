@@ -18,7 +18,7 @@ def get_weather(lat, long, date, key):
     return 'http://api.worldweatheronline.com/premium/v1/past-weather.ashx?key={key}&q={lat},{long}&format=json&date={date}&show_comments=no&tp=24' \
         .format(lat=lat, long=long, date=date, key=key)
 
-for name, coord in coords.items():
+for name, coord in reversed(coords.items()):
     lat, long = round(coord[0], 4), round(coord[1], 4)
 
     name = name.replace('/', '-')
