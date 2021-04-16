@@ -6,4 +6,4 @@ Streamlit
 
 ## Data 
 
-AQI
+AQI data
