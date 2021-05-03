@@ -11,7 +11,7 @@ base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/data/"
 with open("data/coords.json") as a: coords = json.load(a)
 with open("data/API_keys.json") as b: keys = json.load(b)
 
-different_keys = ['WWO_API1', 'WWO_API2', 'WWO_API3', 'WWO_API4', 'WWO_API5', 'WWO_API6']
+different_keys = ['WWO_API2', 'WWO_API3', 'WWO_API4', 'WWO_API5', 'WWO_API6']
 key_pool = cycle(different_keys)
 
 def get_weather(lat, long, date, key):
