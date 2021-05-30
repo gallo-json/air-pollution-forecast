@@ -39,6 +39,8 @@ for tceq_name, tceq_coord in coords.items():
 
         assert len(label_df) <= len(tceq_station_df)
 
+        ### This part is a bit iffy. TODO: check if it works without skipping dates
+
         start_diff = len(tceq_station_df)
         end_diff = 0
 

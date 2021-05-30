@@ -1,9 +1,5 @@
 # Sanitize the data by filling in missing dates and NaNs
-
-# Fetch historical weather only data
-# https://www.worldweatheronline.com
-
-# Air Now 
+# Air Now API
 
 from datetime import datetime
 from itertools import cycle
