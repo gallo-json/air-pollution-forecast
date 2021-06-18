@@ -1,4 +1,4 @@
 data/API_keys.json
 .vscode
 checkpoints_date/
-checkpoints_weather/
+checkpoints_weather_non_nan/
