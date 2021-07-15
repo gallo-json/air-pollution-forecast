@@ -3,6 +3,7 @@ Program to add dates to the CSV file at the beginning of each line.
 
 Written in C because it was easier to do than in Python, and much faster.
 
+Usage (run program and pipe into file): 
 ./add_dates > filename.csv
 */
 

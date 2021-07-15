@@ -1,3 +1,5 @@
+# Script to parse NOAA weather data and break it up into respective regions
+
 import pandas as pd
 import numpy as np
 from scipy import spatial
