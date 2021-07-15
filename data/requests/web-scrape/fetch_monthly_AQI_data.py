@@ -1,4 +1,5 @@
 # Script to webscrape the reliable monthly AQI data from the TCEQ website
+# Run manually to catch up with reliable data or schedule monthly
 # 
 # Usage (append pipe): python3 fetch_monthly_AQI_data.py >> AQI_data.csv
 
@@ -16,7 +17,6 @@ r = requests.get(url)
 soup = BeautifulSoup(r.text, features='html.parser')
 f = io.StringIO(soup.prettify()).readlines()
 
-
 for num, line in enumerate(f):
     for region_name, _ in coords.items():
         arr = []
@@ -32,5 +32,3 @@ for num, line in enumerate(f):
             
             print(d.strftime("%m-%Y") + ',' + region_name + ',1,Reg,', end='')
             print(*arr, sep = ',')
-
-
