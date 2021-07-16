@@ -20,17 +20,28 @@ type API struct {
 	Key string `json:"WA_API"`
 }
 
+type Current struct {
+	CurrentWeather Weather `json:"current"` 
+}
+
+type AirQuality struct {
+	OzoneLevel float64 `json:"o3"`
+}
+
 type Weather struct {
-	AQI string `json:"o3"`
-	Humidity string `json:"humidity"`
-	Pressure string `json:"pressure_mb"`
-	Visibility string `json:"vis_km"`
-	WindSpeed string `json:"gust_kph"`
+	AQI AirQuality `json:"air_quality"`
+	Temperature float64 `json:"temp_c"`
+	Humidity float64 `json:"humidity"`
+	Pressure float64 `json:"pressure_mb"`
+	Visibility float64 `json:"vis_km"`
+	WindSpeed float64 `json:"gust_kph"`
 }
 
 func main() {
 	key := getKey()
-	call(29.8280859, -95.2840958, key)
+	for _, i := range call(29.8280859, -95.2840958, key){
+		fmt.Println(i)
+	}
 }
 
 func getKey() string {
@@ -50,7 +61,7 @@ func getKey() string {
 	return key.Key
 }
 
-func call(lat float32, long float32, key string) {
+func call(lat float64, long float64, key string) [6]float64 {
 	resp, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/current.json?key=%s&q=%f,%f&aqi=yes", key, lat, long))
 	if err != nil {
 		log.Fatalln(err)
@@ -65,4 +76,13 @@ func call(lat float32, long float32, key string) {
 	var data Current
 
 	json.Unmarshal(body, &data)
+
+	return [6]float64{
+		data.CurrentWeather.AQI.OzoneLevel,
+		data.CurrentWeather.Temperature,
+		data.CurrentWeather.Temperature - (100 - data.CurrentWeather.Humidity) / 5, // Simple dew-point approximation
+		data.CurrentWeather.Pressure,
+		data.CurrentWeather.Visibility,
+		data.CurrentWeather.WindSpeed / 3.2, // Convert to m/s
+	}
 }
