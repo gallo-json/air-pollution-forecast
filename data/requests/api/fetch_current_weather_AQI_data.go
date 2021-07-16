@@ -11,27 +11,58 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"encoding/json"
+	"io/ioutil"
+	"log"
 )
 
-type AQI struct {
+type API struct {
 	Key string `json:"WA_API"`
 }
 
+type Weather struct {
+	AQI string `json:"o3"`
+	Humidity string `json:"humidity"`
+	Pressure string `json:"pressure_mb"`
+	Visibility string `json:"vis_km"`
+	WindSpeed string `json:"gust_kph"`
+}
+
 func main() {
-	jsonFile, err := os.Open("data/API_keys.json")
+	key := getKey()
+	call(29.8280859, -95.2840958, key)
+}
+
+func getKey() string {
+	keyFile, err := os.Open("data/API_keys.json")
 
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("Successfully Opened users.json")
-	// defer the closing of our jsonFile so that we can parse it later on
-	defer jsonFile.Close()
+
+	defer keyFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(keyFile)
+
+	var key API
+
+	json.Unmarshal(byteValue, &key)
+	return key.Key
 }
 
-func call(lat int, long int) {
-	resp, err := http.Get("http://api.weatherapi.com/v1/current.json?key=55f31beac75e4bd09e7135959210303&q=London&aqi=yes")
+func call(lat float32, long float32, key string) {
+	resp, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/current.json?key=%s&q=%f,%f&aqi=yes", key, lat, long))
 	if err != nil {
-		// handle error
+		log.Fatalln(err)
 	}
-	fmt.Println(resp)
+	 
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	var data Current
+
+	json.Unmarshal(body, &data)
 }
