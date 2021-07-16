@@ -16,10 +16,6 @@ import (
 	"log"
 )
 
-type API struct {
-	Key string `json:"WA_API"`
-}
-
 type Current struct {
 	CurrentWeather Weather `json:"current"` 
 }
@@ -55,10 +51,11 @@ func getKey() string {
 
 	byteValue, _ := ioutil.ReadAll(keyFile)
 
-	var key API
+	var result map[string]interface{}
 
-	json.Unmarshal(byteValue, &key)
-	return key.Key
+	json.Unmarshal(byteValue, &result)
+
+	return result["WA_API"].(string)
 }
 
 func call(lat float64, long float64, key string) [6]float64 {
