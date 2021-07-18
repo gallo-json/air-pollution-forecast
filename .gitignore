@@ -2,3 +2,4 @@ data/API_keys.json
 src/forecast.py
 .vscode
 weights
+src/ml/__pycache__
