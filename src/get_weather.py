@@ -25,8 +25,6 @@ def weather_forecast(region):
                 ])
 
     # Air quality given in micrograms / cubic meter --> ppb --> AQI
-    arr[0][1] = 0.59 * (r["current"]["air_quality"]["o3"] * 4.5) + 6.1
+    arr[0][1] = 0.59 * (r["current"]["air_quality"]["o3"] / 2) + 6.1
     
     return DataFrame(arr, columns=['Date', 'AQI', 'air_temp', 'dew_point_temp', 'sea_level_pressure', 'visibility', 'wind_speed'])
-
-print(weather_forecast("HRM-3 Haden Road C603/A114"))
