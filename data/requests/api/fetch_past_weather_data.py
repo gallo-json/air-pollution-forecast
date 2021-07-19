@@ -1,7 +1,6 @@
 # Fetch historical weather only data
 # https://www.worldweatheronline.com
 
-from datetime import datetime
 from itertools import cycle
 import numpy as np
 import pandas as pd 

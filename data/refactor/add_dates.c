@@ -1,7 +1,8 @@
 /*
 Program to add dates to the CSV file at the beginning of each line.
+No CSV library used like in Python. CSV file treated as a regular text file.
 
-Written in C because it was easier to do than in Python, and much faster.
+Written in C because it was easier to do than in Python, much faster, and I'm trying to learn.
 
 Usage (run program and pipe into file): 
 ./add_dates > filename.csv

@@ -1,5 +1,5 @@
 /* 
-Fetch DAILY weather and AQI data
+Fetch DAILY weather and AQI data from
 https://www.weatherapi.com
 
 
@@ -16,14 +16,17 @@ import (
 	"log"
 )
 
+// Struct for the current weather reutrned in the JSON
 type Current struct {
 	CurrentWeather Weather `json:"current"` 
 }
 
+// Nested struct for the air quality in the JSON
 type AirQuality struct {
 	OzoneLevel float64 `json:"o3"`
 }
 
+// All the weather classes needed for the data
 type Weather struct {
 	AQI AirQuality `json:"air_quality"`
 	Temperature float64 `json:"temp_c"`
@@ -40,6 +43,7 @@ func main() {
 	}
 }
 
+// getKey fetches the API key from the API_keys JSON file
 func getKey() string {
 	keyFile, err := os.Open("data/API_keys.json")
 
@@ -58,6 +62,7 @@ func getKey() string {
 	return result["WA_API"].(string)
 }
 
+// call requests the API and returns an array with all the weather classes
 func call(lat float64, long float64, key string) [6]float64 {
 	resp, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/current.json?key=%s&q=%f,%f&aqi=yes", key, lat, long))
 	if err != nil {

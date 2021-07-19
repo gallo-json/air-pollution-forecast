@@ -1,7 +1,6 @@
 # Sanitize the data by filling in missing dates and NaNs
 # Air Now API
 
-from datetime import datetime
 from itertools import cycle
 import pandas as pd
 import numpy as np
