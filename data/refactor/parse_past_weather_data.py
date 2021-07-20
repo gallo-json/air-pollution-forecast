@@ -64,10 +64,8 @@ for tceq_name, tceq_coord in coords.items(): # Loop over each station and coordi
             start_diff = tceq_station_df.loc[tceq_station_df.Date == label_df.commit_date.values[0]].index[0]
             end_diff = len(tceq_station_df) - start_diff - len(label_df)
 
-        label_arr = (['NaN'] * start_diff) + list(label_df['avg']) + (['NaN'] * end_diff)
-
-        tceq_station_df[label] = label_arr
-
+        tceq_station_df[label] = (['NaN'] * start_diff) + list(label_df['avg']) + (['NaN'] * end_diff)
+        
     print(tceq_station_df.head(5))
     tceq_station_df.to_csv(base_dir + 'data/' + tceq_name + '.csv')
     

@@ -1,5 +1,6 @@
-# Sanitize the data by filling in missing dates and NaNs
-# Air Now API
+# Sanitize the data by filling in missing dates and NaNs in the AQI column
+# Uses the Air Now API
+# Similar logic to fetch_past_weather_data.py
 
 from itertools import cycle
 import pandas as pd
@@ -8,6 +9,7 @@ import requests
 import time
 import json
 
+new_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/filled-in-data/"
 base_dir = "/home/jose/Programming/aiml/Data/houston-AQI-weather/data/"
 
 with open("data/coords.json") as a: coords = json.load(a)
@@ -18,6 +20,7 @@ key_pool = cycle(different_keys)
 
 AN_API = keys[next(key_pool)]
 
+# Helper function to ready the URL
 def get_aqi(lat, long, date, key):
     return 'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={long}&date={date}T00-0000&distance=100&API_KEY={key}' \
         .format(lat=lat, long=long, date=date, key=key)
@@ -28,7 +31,7 @@ for name, coord in coords.items():
     name = name.replace('/', '-')
     print(name)
     try:
-        df = pd.read_csv("/home/jose/Programming/aiml/Data/houston-AQI-weather/filled-in-data/" + name + ".csv")
+        df = pd.read_csv(new_dir + name + ".csv")
     except FileNotFoundError:
         df = pd.read_csv(base_dir + name + '.csv')
         del df['sky_ceiling_height']
@@ -50,6 +53,5 @@ for name, coord in coords.items():
             print(df.loc[[i]])
             time.sleep(0.33)
 
-        df.to_csv("/home/jose/Programming/aiml/Data/houston-AQI-weather/filled-in-data/" + name + ".csv")
+        df.to_csv(new_dir + name + ".csv")
     print(df.head(5))
-    
