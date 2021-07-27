@@ -39,4 +39,4 @@ icon_layer = pdk.Layer(
     pickable=True,
 )
 
-st.write(pdk.Deck(layers=[icon_layer], initial_view_state=view_state, tooltip={"text": "{tags}"}))
+st.write(pdk.Deck(layers=[icon_layer], initial_view_state=view_state, tooltip={"text": "{region}"}))
