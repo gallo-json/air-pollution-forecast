@@ -1,5 +1,6 @@
 import json
-import pandas as pd
+from pandas import DataFrame
+import streamlit as st
 import requests
 from os import environ
 
@@ -14,13 +15,6 @@ from ml.model_utils import loss_mse_warmup
 # Load in each region's coordinates
 with open("data/coords.json") as a: coords = json.load(a)
 with open("data/API_keys.json") as b: keys = json.load(b)
-
-def coords_df(): 
-    arr = []
-    for region, coord in coords.items():
-        arr.append([region, coord[0], coord[1]])
-
-    return pd.DataFrame(arr, columns=['region', 'latitude', 'longitude'])
 
 # API key
 key = keys['WA_API']
@@ -58,7 +52,7 @@ def weather_forecast(region):
     #arr[0][1] = 0.59 * (r["current"]["air_quality"]["o3"] / 2) + 6.1
     
     # Return dataframe of the dates to predict
-    return pd.DataFrame(arr, columns=['Date', 'AQI', 'air_temp', 'dew_point_temp', 'sea_level_pressure', 'visibility', 'wind_speed'])
+    return DataFrame(arr, columns=['Date', 'AQI', 'air_temp', 'dew_point_temp', 'sea_level_pressure', 'visibility', 'wind_speed'])
 
 weight_dir = 'weights/stations/'
 
@@ -78,3 +72,11 @@ def forecast_AQI(station_name):
     y_pred_rescaled = y_scaler.inverse_transform(preds[0]).ravel().astype(int)
 
     return y_pred_rescaled
+
+@st.cache(persist=True)
+def load_data():
+    arr = []
+    for name, coord in coords.items():
+        preds = forecast_AQI(name.replace('/', '-'))  
+        arr.append([name, coord[0], coord[1], preds[0], preds[1], preds[2]])
+    return DataFrame(arr, columns=['region', 'latitude', 'longitude', 'AQI 1', 'AQI 2', 'AQI 3'])
