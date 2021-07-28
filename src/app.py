@@ -1,42 +1,30 @@
 import streamlit as st
 import pydeck as pdk
-from forecast import forecast_AQI, coords_df
 import numpy as np
 import pandas as pd
 
-ICON_URL = "https://upload.wikimedia.org/wikipedia/commons/c/c4/Projet_bi%C3%A8re_logo_v2.png"
+import os
+import streamlit.components.v1 as components
+
+_RELEASE = False
+
+if not _RELEASE:
+    _component_func = components.declare_component(
+        "my_component",
+        url="http://localhost:3001",
+    )
+else:
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    build_dir = os.path.join(parent_dir, "frontend/build")
+    _component_func = components.declare_component("my_component", path=build_dir)
 
 
-icon_data = {
-    # Icon from Wikimedia, used the Creative Commons Attribution-Share Alike 3.0
-    # Unported, 2.5 Generic, 2.0 Generic and 1.0 Generic licenses
-    "url": ICON_URL,
-    "width": 242,
-    "height": 242,
-    "anchorY": 242,
-}
-locations = coords_df()
-
-#@st.cache
-#def cache_wrapper(region): return forecast_AQI(region)
-
-locations["icon_data"] = None
-for i in locations.index:
-    locations["icon_data"][i] = icon_data
+def my_component(key=None):
+    component_value = _component_func(key=key, default=0)
+    return component_value
 
 
-
-view_state = pdk.data_utils.compute_view(locations[["longitude", "latitude"]], 0.1)
-
-
-icon_layer = pdk.Layer(
-    type="IconLayer",
-    data=locations,
-    get_icon="icon_data",
-    get_size=4,
-    size_scale=15,
-    get_position=["longitude", "latitude"],
-    pickable=True,
-)
-
-st.write(pdk.Deck(layers=[icon_layer], initial_view_state=view_state, tooltip={"text": "{region}"}))
+if not _RELEASE:
+    st.subheader("Leaflet - return coords on click")
+    clicked_coords = my_component()
+    st.markdown(clicked_coords)
