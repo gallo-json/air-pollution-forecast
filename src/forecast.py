@@ -1,6 +1,5 @@
 import json
 from pandas import DataFrame
-import streamlit as st
 import requests
 from os import environ
 
@@ -73,10 +72,10 @@ def forecast_AQI(station_name):
 
     return y_pred_rescaled
 
-@st.cache(persist=True)
-def load_data():
+def coords_df(): 
     arr = []
-    for name, coord in coords.items():
-        preds = forecast_AQI(name.replace('/', '-'))  
-        arr.append([name, coord[0], coord[1], preds[0], preds[1], preds[2]])
-    return DataFrame(arr, columns=['region', 'latitude', 'longitude', 'AQI 1', 'AQI 2', 'AQI 3'])
+    for region, coord in coords.items():
+        arr.append([region, coord[0], coord[1]])
+
+    return DataFrame(arr, columns=['region', 'latitude', 'longitude'])
+
