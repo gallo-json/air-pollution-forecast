@@ -72,10 +72,14 @@ def forecast_AQI(station_name):
 
     return y_pred_rescaled
 
-def coords_df(): 
-    arr = []
-    for region, coord in coords.items():
-        arr.append([region, coord[0], coord[1]])
+# JSON to Pandas DF
+arr = []
+for region, coord in coords.items():
+    arr.append([region, coord[0], coord[1]])
 
-    return DataFrame(arr, columns=['region', 'latitude', 'longitude'])
+coords_df = DataFrame(arr, columns=['region', 'latitude', 'longitude'])
 
+def find_region(lat, long):
+    for r in coords_df.rows:
+        if r['latitude'] == lat and r['longitude'] == long:
+            return r['region']

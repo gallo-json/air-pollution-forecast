@@ -1,27 +1,26 @@
 import streamlit as st
-import pydeck as pdk
-import numpy as np
-import pandas as pd
+from scipy.spatial import KDTree
 
-import os
+from forecast import coords_df, find_region, forecast_AQI
+
 import streamlit.components.v1 as components
 
-_RELEASE = False
 
-if not _RELEASE:
-    _component_func = components.declare_component(
-        "my_component",
-        url="http://localhost:3001",
-    )
+_component_func = components.declare_component(
+    "my_component",
+    url="http://localhost:3001",
+)
 
 def my_component(key=None):
     component_value = _component_func(key=key, default=0)
     return component_value
 
-if not _RELEASE:
-    st.subheader("Leaflet - return coords on click")
-    clicked_coords = my_component()
-    if type(clicked_coords) is int:
-        print(clicked_coords)
-    else:
-        print(clicked_coords['lat'], clicked_coords['lng'])
+st.header("Houston 3 Day Air Quality Forecast")
+st.subheader("Click on your area in Houston")
+
+clicked_coords = my_component()
+
+if type(clicked_coords) is dict:
+    tree = KDTree(coords_df[['latitude', 'longitude']].values)
+    idx = int(tree.query([clicked_coords['lat'], clicked_coords['lng']])[1])
+    st.write(forecast_AQI(coords_df['region'].iloc[idx]))
