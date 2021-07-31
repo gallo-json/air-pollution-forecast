@@ -1,3 +1,4 @@
+
 [submodule "src/frontend/streamlit-light-leaflet"]
 	path = src/frontend/streamlit-light-leaflet
 	url = https://github.com/gallo-json/streamlit-light-leaflet.git
