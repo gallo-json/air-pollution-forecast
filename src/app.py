@@ -4,7 +4,7 @@ from datetime import datetime
 import streamlit.components.v1 as components
 
 from forecast import coords_df, forecast_AQI
-from frontend.make_boxes import make_box
+#from frontend.make_boxes import make_box
 
 date_now = datetime.now()
 
