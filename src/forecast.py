@@ -78,8 +78,3 @@ for region, coord in coords.items():
     arr.append([region, coord[0], coord[1]])
 
 coords_df = DataFrame(arr, columns=['region', 'latitude', 'longitude'])
-
-def find_region(lat, long):
-    for r in coords_df.rows:
-        if r['latitude'] == lat and r['longitude'] == long:
-            return r['region']

@@ -1,52 +1,84 @@
-import numpy as np
-import cv2
+from PIL import Image, ImageDraw, ImageFont
 
-size = (512,512,3)
+size = (512,512)
 
 colors = [
     (1,228,1),
-    (0, 255, 255),
-    (0, 127, 255),
-    (0, 0, 255),
-    (76, 1, 153)
+    (255, 255, 0),
+    (255, 127, 0),
+    (255, 0, 0),
+    (153, 1, 76)
 ]
 
-font = cv2.FONT_HERSHEY_SIMPLEX
 
-def get_center(text, font_size, font_thickness):
-    text_size = cv2.getTextSize(text, font, font_size, font_thickness)[0]
-
-    return int(size[1] - text_size[0]) // 2, int(size[0] + text_size[1]) // 2
-
-def draw(aqi):
-    img = np.zeros(size, np.uint8)
+def make_box(aqi):
 
     if (aqi <= 50):
-        cv2.rectangle(img, (0, 0), size[:2], colors[0], 10000)
+        img = Image.new(mode='RGB', size=size, color=colors[0])
+        draw = ImageDraw.Draw(img)
 
         text = [
-            # (text, font_size, font_thickness, y_pos from center)
-            ("GOOD", 4, 5, -200),
-            ("AQI", 2, 5, -100),
-            (str(aqi), 4, 5, 0),
-            ("Air quality is satisfactory.", 2, 2, 100),
-            ("It is safe to go outside.", 2, 2, 200)
+            # (text, font_size, y_pos from center)
+            ("GOOD", 20, -200),
+            ("AQI", 20, -100),
+            (str(aqi), 20, 0),
+            ("Air quality is satisfactory.", 20, 100),
+            ("It is safe to go outside.", 20, 200)
+        ]
+    elif (aqi >= 51) and (aqi <= 100):
+        img = Image.new(mode='RGB', size=size, color=colors[1])
+        draw = ImageDraw.Draw(img)
+
+        text = [
+            # (text, font_size, y_pos from center)
+            ("GOOD", 20, -200),
+            ("AQI", 20, -100),
+            (str(aqi), 20, 0),
+            ("Air quality is satisfactory.", 20, 100),
+            ("It is safe to go outside.", 20, 200)
+        ]
+    elif (aqi >= 101) and (aqi <= 150):
+        img = Image.new(mode='RGB', size=size, color=colors[2])
+        draw = ImageDraw.Draw(img)
+
+        text = [
+            # (text, font_size, y_pos from center)
+            ("GOOD", 20, -200),
+            ("AQI", 20, -100),
+            (str(aqi), 20, 0),
+            ("Air quality is satisfactory.", 20, 100),
+            ("It is safe to go outside.", 20, 200)
         ]
 
-        for t in text:
-            x, y = get_center(t[0], t[1], t[2])
-            cv2.putText(img, t[0], (x, y + t[3]), font, t[1], (0, 0, 0), t[2])
-    elif (aqi >= 51) and (aqi <= 100):
-        cv2.rectangle(img, (0, 0), size[:2], colors[1], 10000)
-    elif (aqi >= 101) and (aqi <= 150):
-        cv2.rectangle(img, (0, 0), size[:2], colors[2], 10000)
     elif (aqi >= 151) and (aqi <= 200):
-        cv2.rectangle(img, (0, 0), size[:2], colors[3], 10000)
+        img = Image.new(mode='RGB', size=size, color=colors[3])
+        draw = ImageDraw.Draw(img)
+
+        text = [
+            # (text, font_size, y_pos from center)
+            ("GOOD", 20, -200),
+            ("AQI", 20, -100),
+            (str(aqi), 20, 0),
+            ("Air quality is satisfactory.", 20, 100),
+            ("It is safe to go outside.", 20, 200)
+        ]
+
     else:
-        cv2.rectangle(img, (0, 0), size[:2], colors[4], 10000)
+        img = Image.new(mode='RGB', size=size, color=colors[4])
+        draw = ImageDraw.Draw(img)
+
+        text = [
+            # (text, font_size, y_pos from center)
+            ("GOOD", 20, -200),
+            ("AQI", 20, -100),
+            (str(aqi), 20, 0),
+            ("Air quality is satisfactory.", 20, 100),
+            ("It is safe to go outside.", 20, 200)
+        ]
+
+    for t in text:
+        font = ImageFont.truetype('src/frontend/Comfortaa-Regular.ttf', t[1])
+        x, y = draw.textsize(t[0], font=font)
+        draw.text(((size[0] - x) / 2, (size[1] - y) / 2  + t[2]), t[0], fill='black', font=font)
 
     return img
-
-
-cv2.imshow('mat', draw(8))
-cv2.waitKey(0)

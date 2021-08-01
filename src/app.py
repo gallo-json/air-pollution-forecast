@@ -1,9 +1,10 @@
 import streamlit as st
 from scipy.spatial import KDTree
 from datetime import datetime
-from forecast import coords_df, find_region, forecast_AQI
-
 import streamlit.components.v1 as components
+
+from forecast import coords_df, forecast_AQI
+from frontend.make_boxes import make_box
 
 date_now = datetime.now()
 
@@ -30,9 +31,12 @@ if type(clicked_coords) is dict:
 
     with col1:
         st.header(date_now.strftime("%b") + ' ' + date_now.strftime("%d"))
+        #st.image(make_box(preds[0]))
 
     with col2:
         st.header(date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 1))
+        #st.image(make_box(preds[1]))
 
     with col3:
         st.header(date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 2))
+        #st.image(make_box(preds[2]))
