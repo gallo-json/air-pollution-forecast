@@ -1,10 +1,10 @@
+from forecast import coords_df, forecast_AQI
+from frontend.make_boxes import make_box
+
 import streamlit as st
 from scipy.spatial import KDTree
 from datetime import datetime
 import streamlit.components.v1 as components
-
-from forecast import coords_df, forecast_AQI
-#from frontend.make_boxes import make_box
 
 date_now = datetime.now()
 
@@ -25,18 +25,18 @@ clicked_coords = my_component()
 if type(clicked_coords) is dict:
     tree = KDTree(coords_df[['latitude', 'longitude']].values)
     idx = int(tree.query([clicked_coords['lat'], clicked_coords['lng']])[1])
-    preds = forecast_AQI(coords_df['region'].iloc[idx])
+    preds = forecast_AQI(coords_df['region'].iloc[idx].replace('/', '-'))
 
     col1, col2, col3 = st.beta_columns(3)
 
     with col1:
         st.header(date_now.strftime("%b") + ' ' + date_now.strftime("%d"))
-        #st.image(make_box(preds[0]))
+        st.image(make_box(preds[0]))
 
     with col2:
         st.header(date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 1))
-        #st.image(make_box(preds[1]))
+        st.image(make_box(preds[1]))
 
     with col3:
         st.header(date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 2))
-        #st.image(make_box(preds[2]))
+        st.image(make_box(preds[2]))

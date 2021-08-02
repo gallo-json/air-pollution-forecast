@@ -1,84 +1,29 @@
-from PIL import Image, ImageDraw, ImageFont
+import cv2
 
-size = (512,512)
+font = cv2.FONT_HERSHEY_SIMPLEX
+font_size = 5
+font_thickness = 8
 
-colors = [
-    (1,228,1),
-    (255, 255, 0),
-    (255, 127, 0),
-    (255, 0, 0),
-    (153, 1, 76)
-]
+def get_center(img, text):
+    text_size = cv2.getTextSize(text, font, font_size, font_thickness)[0]
 
+    return int(img.shape[1] - text_size[0]) // 2, int(img.shape[0] + text_size[1]) // 2
 
 def make_box(aqi):
+    base_dir = 'src/frontend/box-templates/'
 
     if (aqi <= 50):
-        img = Image.new(mode='RGB', size=size, color=colors[0])
-        draw = ImageDraw.Draw(img)
-
-        text = [
-            # (text, font_size, y_pos from center)
-            ("GOOD", 20, -200),
-            ("AQI", 20, -100),
-            (str(aqi), 20, 0),
-            ("Air quality is satisfactory.", 20, 100),
-            ("It is safe to go outside.", 20, 200)
-        ]
+       img = cv2.imread(base_dir + 'good.png')
     elif (aqi >= 51) and (aqi <= 100):
-        img = Image.new(mode='RGB', size=size, color=colors[1])
-        draw = ImageDraw.Draw(img)
-
-        text = [
-            # (text, font_size, y_pos from center)
-            ("GOOD", 20, -200),
-            ("AQI", 20, -100),
-            (str(aqi), 20, 0),
-            ("Air quality is satisfactory.", 20, 100),
-            ("It is safe to go outside.", 20, 200)
-        ]
+        img = cv2.imread(base_dir + 'moderate.png')
     elif (aqi >= 101) and (aqi <= 150):
-        img = Image.new(mode='RGB', size=size, color=colors[2])
-        draw = ImageDraw.Draw(img)
-
-        text = [
-            # (text, font_size, y_pos from center)
-            ("GOOD", 20, -200),
-            ("AQI", 20, -100),
-            (str(aqi), 20, 0),
-            ("Air quality is satisfactory.", 20, 100),
-            ("It is safe to go outside.", 20, 200)
-        ]
-
+        img = cv2.imread(base_dir + 'unhealthy_orange.png')
     elif (aqi >= 151) and (aqi <= 200):
-        img = Image.new(mode='RGB', size=size, color=colors[3])
-        draw = ImageDraw.Draw(img)
-
-        text = [
-            # (text, font_size, y_pos from center)
-            ("GOOD", 20, -200),
-            ("AQI", 20, -100),
-            (str(aqi), 20, 0),
-            ("Air quality is satisfactory.", 20, 100),
-            ("It is safe to go outside.", 20, 200)
-        ]
-
+        img = cv2.imread(base_dir + 'unhealthy_red.png')
     else:
-        img = Image.new(mode='RGB', size=size, color=colors[4])
-        draw = ImageDraw.Draw(img)
-
-        text = [
-            # (text, font_size, y_pos from center)
-            ("GOOD", 20, -200),
-            ("AQI", 20, -100),
-            (str(aqi), 20, 0),
-            ("Air quality is satisfactory.", 20, 100),
-            ("It is safe to go outside.", 20, 200)
-        ]
-
-    for t in text:
-        font = ImageFont.truetype('src/frontend/Comfortaa-Regular.ttf', t[1])
-        x, y = draw.textsize(t[0], font=font)
-        draw.text(((size[0] - x) / 2, (size[1] - y) / 2  + t[2]), t[0], fill='black', font=font)
+        img = cv2.imread(base_dir + 'very_unhealthy.png')
+    
+    x, y = get_center(img, str(aqi))
+    cv2.putText(img, str(aqi), (x, y + 40), font, font_size, (0, 0, 0), font_thickness)
 
     return img
