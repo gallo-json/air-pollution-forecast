@@ -26,4 +26,4 @@ def make_box(aqi):
     x, y = get_center(img, str(aqi))
     cv2.putText(img, str(aqi), (x, y + 40), font, font_size, (0, 0, 0), font_thickness)
 
-    return img
+    return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
