@@ -2,15 +2,27 @@
 
 ## Motivation
 
+AQI is just a way to measure air pollution, and its value can fall in 6 different categories.
+
+![AQI](docs/AQI.png)
+
 ## Overview
+
+Usually with forecasts, meteorologists analyze trends on a map because it is much easier for a human that way. But machines can easily interpret rows of data much better than any human can. 
+
+I wanted to see if weather (temperature, dew point humidity, pressure, wind speed, & visibility) had a correlation with air pollution, and make a forecast for AQI based on that. My reason was that, apart from the cyclical nature of these features, they should have a general increaing trend due to global warming, and that definitely affects the AQI levels.
 
 ![network](docs/network-overview.png)
 
+Since the features contain a wide set of values, we scale the data to fit between 0 and 1. This reduces the disparity and makes the training faster.
+
+I chose a LSTM model at first because, as the name implies, the model would take care of the long-term and short-term trends. The short-term trend in this scenario would be the fluctuation in AQI levels on the daily. For example, AQI levels during the week may be higher due to car pollution commuting to work, compared to AQI levels during the weekends. The long-term trend would be the gradual increase in AQI due to global warming. A model that takes into consideration both perspecitves would be ideal. But in the end, I went with a GRU because it outpreformed the LSTM by a little. There wasn't that much of a difference.
+
 ## Results
 
-https://www.airnow.gov/aqi/aqi-calculator/
+The average MSE loss was 0.1, scaled. This transalted into roughly 4 AQI points after an inverse transformation. In other words, the model had a prediction accuracy of plus or minus 4 AQI points.
 
-0.01 MSE loss inverse transformed into roughly 4 AQI points
+![example](docs/good-test-graph.png)
 
 ## Tech stack
 
