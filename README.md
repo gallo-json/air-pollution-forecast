@@ -6,8 +6,6 @@
 
 ![network](docs/network-overview.png)
 
-![dataset](docs/dataset-overview.png)
-
 ## Results
 
 https://www.airnow.gov/aqi/aqi-calculator/
@@ -31,6 +29,16 @@ The data I used to train this model was very reliable. I coalesced two different
 
 [TCEQ's dataset](https://www.tceq.texas.gov/cgi-bin/compliance/monops/peak_monthly.pl?override) is only an online tabular dataset. I had to webscrape the values into a CSV so I could parse and feed into the model. It provides data over 60 weather stations in Houston. The AQI value is what the model is trying to predict. 
 
+The dataset was split into train and test in chonological order for training the model and seeing how it preformed with data never it never saw before. Once the loss was satisfactory, the models were ready to deploy for forecasting.
+
+![dataset](docs/dataset-overview.png)
+
 ## Obstacles
 
 The main problems I faced while completing this project was the frontend and the limited usage of the meterological weather APIs. I elaborate more [here.](docs/Reflection.md)
+
+## Useful links
+
+- Tensorflow Time-Series Prediction Tutorial: https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/23_Time-Series-Prediction.ipynb
+- Interactive map Streamlit component: https://github.com/andfanilo/streamlit-light-leaflet
+- Streamlit demo: https://github.com/streamlit/demo-uber-nyc-pickups

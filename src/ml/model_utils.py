@@ -1,3 +1,6 @@
+# These util functions are based from https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/23_Time-Series-Prediction.ipynb
+# Credit to the original writer Hvass-Labs
+
 from tensorflow.keras.backend import square, mean
 import numpy as np
 
