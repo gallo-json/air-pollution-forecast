@@ -53,7 +53,7 @@ def loss_mse_warmup(y_true, y_pred):
     # These sliced tensors both have this shape:
     # [batch_size, sequence_length - warmup_steps, num_y_signals]
 
-    # Calculat the Mean Squared Error and use it as loss.
+    # Calculate the Mean Squared Error and use it as loss.
     mse = mean(square(y_true_slice - y_pred_slice))
     
     return mse
