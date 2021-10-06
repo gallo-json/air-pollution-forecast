@@ -46,7 +46,7 @@ It's bummer because I think visibility would've been a very important feature, b
 
 I am not a frontend guy. At first, I made a very nice UI for the website with simple HTML/CSS, but there were plenty of issues. The UI I made was not responsive at all, plus the fact that I was now limited to a three day forecast changed the number of boxes I needed. So I tried rearranging the boxes that had the AQI predictions in them but I could't, and it really frustrated me. The final and most important issue is that I had a hard time sending data from the frontend to the backend and vice versa. I did not have any expertise in this field and I didn't have much time to finish and edit my video for the competition, so I had to make a quick streamlit alternative.
 
-I find streamlit much easier to work with than HTML/CSS, but it is also much more limited. 
+I find streamlit much easier to work with than HTML/CSS, but it is also much more limited. The boxes I had to make with OpenCV because frontend HTML/CSS had frustrated me already. I ended up deleting my index.html file and lost all my progress.
 
 ## What I liked
 
