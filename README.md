@@ -76,3 +76,5 @@ The main problems I faced while completing this project was the frontend and the
 - Tensorflow Time-Series Prediction Tutorial: https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/23_Time-Series-Prediction.ipynb
 - Interactive map Streamlit component: https://github.com/andfanilo/streamlit-light-leaflet
 - Streamlit demo: https://github.com/streamlit/demo-uber-nyc-pickups
+
+# **Note: The website has stopped being hosted because I have been very busy with other things, such as school. Thank you everyone!**

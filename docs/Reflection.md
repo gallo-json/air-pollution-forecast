@@ -44,11 +44,13 @@ It's bummer because I think visibility would've been a very important feature, b
 
 ### Frontend
 
-I am not a frontend guy. At first, I made a very nice UI for the website with simple HTML/CSS, but there were plenty of issues. The UI I made was not responsive at all, plus the fact that I was now limited to a three day forecast changed the number of boxes I needed. So I tried rearranging the boxes that had the AQI predictions in them but I could't, and it really frustrated me. The final and most important issue is that I had a hard time sending data from the frontend to the backend and vice versa. I did not have any expertise in this field and I didn't have much time to finish and edit my video for the competition, so I had to make a quick streamlit alternative.
+I am not a frontend guy. At first, I made a very nice UI for the website with simple HTML/CSS, but there were plenty of issues.  The UI I made was not responsive at all, plus the fact that I was now limited to a three day forecast changed the number of boxes I needed. So I tried rearranging the boxes that had the AQI predictions in them but I could't, and it really frustrated me. The final and most important issue is that I had a hard time sending data from the frontend to the backend and vice versa. I did implement an interactive map with leaflet, but I had a hard time locating the user's clicks and sending that JSON coordinate. I did not have any expertise in this field and I didn't have much time to finish and edit my video for the competition, so I had to make a quick streamlit alternative.
 
-I find streamlit much easier to work with than HTML/CSS, but it is also much more limited. The boxes I had to make with OpenCV because frontend HTML/CSS had frustrated me already. I ended up deleting my index.html file and lost all my progress.
+I find streamlit much easier to work with than HTML/CSS, but it is also much more limited. I found a useful leaflet map component for streamlit that returned the coordinates of a click, and that save me lots of time. The boxes I had to make with OpenCV because frontend HTML/CSS had frustrated me already. I ended up deleting my index.html file and lost all my progress.
 
 ## What I liked
+
+I liked the fact that I was able to help my community with this program. I did feel accomplished when completing this project because it took a lot of trial and error and commitment. People did use my website and I am very proud of that.
 
 ## What I learned
 
