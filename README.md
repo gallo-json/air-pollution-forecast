@@ -41,8 +41,8 @@ cd src/frontend/streamlit-light-leaflet/my_component/frontend/
 npm install
 npm run start
 
-cd ../../../..
-streamlit run app.py
+cd ../../../../..
+streamlit src/run app.py
 ```
 
 ## Tech stack
