@@ -38,9 +38,9 @@ if type(clicked_coords) is dict:
         st.image(make_box(preds[0]))
 
     with col2:
-        st.header(date_now.strftime("%a") + ' ' + date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 1))
+        st.header((date_now + timedelta(days=1)).strftime("%a") + ' ' + date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 1))
         st.image(make_box(preds[1]))
 
     with col3:
-        st.header(date_now.strftime("%a") + ' ' + date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 2))
+        st.header((date_now + timedelta(days=2)).strftime("%a") + ' ' + date_now.strftime("%b") + ' ' + str(int(date_now.strftime("%d")) + 2))
         st.image(make_box(preds[2]))
