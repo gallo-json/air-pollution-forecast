@@ -42,7 +42,7 @@ cd src/ml
 python3 train_models.py
 ```
 
-To run the website, first deploy the Leaflet streamlit component, then run `app.py`.
+To run the website locally, first deploy the Leaflet streamlit component, then run `app.py`.
 
 ```
 cd src/frontend/streamlit-light-leaflet/my_component/frontend/
