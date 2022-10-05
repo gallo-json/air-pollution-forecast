@@ -35,7 +35,7 @@ The average MSE loss was 0.1, scaled. This translated into roughly 4 AQI points 
 ![example](docs/good-test-graph.png)
 
 ## Run
-I gitignored the weights from the models because they were too big all together. You can train the models with
+First, make sure you have all the depedencies (listed in the Tech Stack). I gitignored the weights from the models because they were too big all together. You can train the models with
 
 ```
 cd src/ml
