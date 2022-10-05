@@ -3,3 +3,4 @@ data/API_keys.json
 weights
 *.pyc
 *.ttf
+requirements.txt
