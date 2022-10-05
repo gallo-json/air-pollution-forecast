@@ -35,6 +35,14 @@ The average MSE loss was 0.1, scaled. This translated into roughly 4 AQI points 
 ![example](docs/good-test-graph.png)
 
 ## Run
+I gitignored the weights from the models because they were too big all together. You can train the models with
+
+```
+cd src/ml
+python3 train_models.py
+```
+
+To run the website, first deploy the Leaflet streamlit component, then run `app.py`.
 
 ```
 cd src/frontend/streamlit-light-leaflet/my_component/frontend/
@@ -45,6 +53,18 @@ cd ../../../../..
 streamlit src/run app.py
 ```
 
+## Dataset Used
+
+Most of the time spent on this project was acually cleaning the data with scripts in the `/data` folder. The data I used to train this model was very reliable. I coalesced two different datasets provided by the [NOAA](https://www.noaa.gov/) (National Oceanic and Atmospheric Administration) and the [TCEQ](https://www.tceq.texas.gov/) (Texas Commission on Environmental Quality).
+
+[NOAA's dataset](https://www.dolthub.com/repositories/Liquidata/noaa) came from DoltHub, which I downloaded and converted to CSV. It contained meterological weather data from over thirteen different weather stations strategically placed in Houston. These were the features I used to feed into the model.
+
+[TCEQ's dataset](https://www.tceq.texas.gov/cgi-bin/compliance/monops/peak_monthly.pl?override) is only an online tabular dataset. I had to webscrape the values into a CSV so I could parse and feed into the model. It provides data over 60 weather stations in Houston. The AQI value is what the model is trying to predict. 
+
+The dataset was split into train and test in chronological order for training the model and seeing how it preformed with data never it never saw before. Once the loss was satisfactory, the models were ready to deploy for forecasting.
+
+![dataset](docs/dataset-overview.png)
+
 ## Tech stack
 
 - Python 3
@@ -54,18 +74,6 @@ streamlit src/run app.py
 - NumPy - manipulating arrays
 - Scikit Learn - scaling
 - Streamlit - hosting and frontend 
-
-## Dataset Used
-
-The data I used to train this model was very reliable. I coalesced two different datasets provided by the [NOAA](https://www.noaa.gov/) (National Oceanic and Atmospheric Administration) and the [TCEQ](https://www.tceq.texas.gov/) (Texas Commission on Environmental Quality).
-
-[NOAA's dataset](https://www.dolthub.com/repositories/Liquidata/noaa) came from DoltHub, which I downloaded and converted to CSV. It contained meterological weather data from over thirteen different weather stations strategically placed in Houston. These were the features I used to feed into the model.
-
-[TCEQ's dataset](https://www.tceq.texas.gov/cgi-bin/compliance/monops/peak_monthly.pl?override) is only an online tabular dataset. I had to webscrape the values into a CSV so I could parse and feed into the model. It provides data over 60 weather stations in Houston. The AQI value is what the model is trying to predict. 
-
-The dataset was split into train and test in chronological order for training the model and seeing how it preformed with data never it never saw before. Once the loss was satisfactory, the models were ready to deploy for forecasting.
-
-![dataset](docs/dataset-overview.png)
 
 ## Obstacles
 
@@ -78,3 +86,5 @@ The main problems I faced while completing this project was the frontend and the
 - Streamlit demo: https://github.com/streamlit/demo-uber-nyc-pickups
 
 # **Note: The website has stopped being hosted because I have been very busy with other things, such as school. Thank you everyone!**
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://houston-aqi-forecast.streamlitapp.com)
