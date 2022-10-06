@@ -79,6 +79,10 @@ The dataset was split into train and test in chronological order for training th
 
 The main problems I faced while completing this project was the frontend and the limited usage of the meterological weather APIs. I elaborate more [here.](docs/Reflection.md)
 
+## Video
+
+I submitted [this](https://www.youtube.com/watch?v=m9oTBC5vhqk) video to the Houston Teens Care About Clean Air Video Contest led by the Environmental Youth Council in 2021. I got lots of views & likes across my community and recieved an Honorable Mention award (diploma can be found [here](docs/diploma.png)). you may notice that the UI looks different in the video because I switched from doing a 7-day forecast to a 3-day forecast. I explain why this happened and other setbacks in my [reflaction](docs/Reflection.md) of this project.
+
 ## Useful links
 
 - Tensorflow Time-Series Prediction Tutorial: https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/23_Time-Series-Prediction.ipynb
@@ -87,4 +91,4 @@ The main problems I faced while completing this project was the frontend and the
 
 # **Note: The website has stopped being hosted because I have been very busy with other things, such as school. Thank you everyone!**
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://houston-aqi-forecast.streamlitapp.com)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://houston-aqi-forecast.streamlitapp.com) (dead link)
