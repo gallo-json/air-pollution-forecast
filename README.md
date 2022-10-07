@@ -81,7 +81,7 @@ The main problems I faced while completing this project was the frontend and the
 
 ## Video
 
-I submitted [this](https://www.youtube.com/watch?v=m9oTBC5vhqk) video to the Houston Teens Care About Clean Air Video Contest led by the Environmental Youth Council in 2021. I got lots of views & likes across my community and recieved an Honorable Mention award (diploma can be found [here](docs/diploma.png)). you may notice that the UI looks different in the video because I switched from doing a 7-day forecast to a 3-day forecast. I explain why this happened and other setbacks in my [reflaction](docs/Reflection.md) of this project.
+I submitted [this](https://www.youtube.com/watch?v=m9oTBC5vhqk) video to the Houston Teens Care About Clean Air Video Contest led by the Environmental Youth Council in 2021. I got lots of views & likes across my community and recieved an Honorable Mention award (diploma can be found [here](docs/diploma.pdf)). you may notice that the UI looks different in the video because I switched from doing a 7-day forecast to a 3-day forecast. I explain why this happened and other setbacks in my [reflaction](docs/Reflection.md) of this project.
 
 ## Useful links
 
