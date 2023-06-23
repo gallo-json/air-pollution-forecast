@@ -90,7 +90,3 @@ I submitted [this](https://www.youtube.com/watch?v=m9oTBC5vhqk) video to the Hou
 - Tensorflow Time-Series Prediction Tutorial: https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/23_Time-Series-Prediction.ipynb
 - Interactive map Streamlit component: https://github.com/andfanilo/streamlit-light-leaflet
 - Streamlit demo: https://github.com/streamlit/demo-uber-nyc-pickups
-
-# **Note: The website has stopped being hosted because I have been very busy with other things, such as school. Thank you everyone!**
-
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://houston-aqi-forecast.streamlitapp.com) (dead link)
