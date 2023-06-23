@@ -1,5 +1,7 @@
 # Houston Air Pollution Forecast
 
+## ![Technical Writeup](docs/Air%20Pollution%20Project%20PDF%20technical%20write-up.pdf)
+
 ## Motivation
 
 Houston is one of the biggest cities in the US with heavy air pollution levels. There are two major causes of air pollution in this city: oil refineries and commuting. Houston has a large oil industry as well as some of the busiest interstates/roads in the country.
